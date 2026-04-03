@@ -1,4 +1,4 @@
-namespace EcommerceApi.Models;
+namespace ProjectOrangeApi.Models;
 
 public class OrderItem
 {

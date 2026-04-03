@@ -1,6 +1,3 @@
 @ProjectOrangeApi_HostAddress = http://localhost:5175
 
-GET {{ProjectOrangeApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
 ###
