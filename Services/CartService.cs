@@ -24,7 +24,19 @@ public class CartService : ICartService
 
     public async Task<CartResponseDto> AddToCartAsync(string? cartCode, AddToCartRequest request)
     {
+        if (request.Quantity <= 0)
+        {
+            throw new Exception("Quantity must be greater than zero.");
+        }
+
         var cart = await GetOrCreateCartAsync(cartCode);
+
+        var product = await _context.Products
+            .Include(p => p.Category)
+            .Include(p => p.ItemSpecs)
+            .FirstOrDefaultAsync(p => p.Id == request.ProductId)
+            ?? throw new Exception("Product not found.");
+
         var existingItem = cart.Entries.FirstOrDefault(x => x.ProductId == request.ProductId);
 
         if (existingItem is not null)
@@ -35,11 +47,20 @@ public class CartService : ICartService
         {
             var cartItem = new CartItem
             {
-                ProductId = request.ProductId,
-                ProductName = request.ProductName,
-                Price = request.Price,
+                ProductId = product.Id,
+                ProductName = product.Name,
+                Price = product.Price,
                 Quantity = request.Quantity,
-                ImageUrl = request.ImageUrl,
+                StockQuantity = product.StockQuantity,
+                ImageUrl = product.ImageUrl,
+                CategoryName = product.Category?.Name ?? string.Empty,
+
+                ItemSpecs = product.ItemSpecs.Select(spec => new CartItemSpec
+                {
+                    Name = spec.Name,
+                    Value = spec.Value
+                }).ToList(),
+
                 Addons = request.Addons.Select(a => new CartItemAddon
                 {
                     AddonId = a.Id,
@@ -55,6 +76,7 @@ public class CartService : ICartService
         }
 
         await _context.SaveChangesAsync();
+
         return MapToResponse(cart);
     }
 
@@ -123,7 +145,9 @@ public class CartService : ICartService
         {
             var existingCart = await _context.Carts
                 .Include(c => c.Entries)
-                .ThenInclude(i => i.Addons)
+                    .ThenInclude(i => i.ItemSpecs)
+                .Include(c => c.Entries)
+                    .ThenInclude(i => i.Addons)
                 .Include(c => c.AppliedVouchers)
                 .FirstOrDefaultAsync(c => c.Code == cartCode);
 
@@ -150,10 +174,12 @@ public class CartService : ICartService
     private async Task<Cart> GetCartEntityAsync(string cartCode)
     {
         var cart = await _context.Carts
-          .Include(c => c.Entries)
-          .ThenInclude(i => i.Addons)
-          .Include(c => c.AppliedVouchers)
-          .FirstOrDefaultAsync(c => c.Code == cartCode);
+            .Include(c => c.Entries)
+                .ThenInclude(i => i.ItemSpecs)
+            .Include(c => c.Entries)
+                .ThenInclude(i => i.Addons)
+            .Include(c => c.AppliedVouchers)
+            .FirstOrDefaultAsync(c => c.Code == cartCode);
 
         if (cart is null)
             throw new Exception("Cart not found.");
@@ -180,7 +206,16 @@ public class CartService : ICartService
                 ProductName = item.ProductName,
                 Price = item.Price,
                 Quantity = item.Quantity,
+                StockQuantity = item.StockQuantity,
                 ImageUrl = item.ImageUrl,
+                CategoryName = item.CategoryName,
+
+                ItemSpecs = item.ItemSpecs.Select(spec => new ProductSpecDto
+                {
+                    Name = spec.Name,
+                    Value = spec.Value
+                }).ToList(),
+
                 Addons = item.Addons.Select(addon => new AddonDto
                 {
                     Id = addon.AddonId,

@@ -36,8 +36,10 @@ public class OrdersController : ControllerBase
 
         var productIds = dto.Items.Select(i => i.ProductId).ToList();
         var products = await _context.Products
-          .Where(p => productIds.Contains(p.Id))
-          .ToListAsync();
+            .Include(p => p.Category)
+            .Include(p => p.ItemSpecs)
+            .Where(p => productIds.Contains(p.Id))
+            .ToListAsync();
 
         var order = new Order
         {

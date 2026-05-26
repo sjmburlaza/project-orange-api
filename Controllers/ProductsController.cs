@@ -26,6 +26,7 @@ public class ProductsController : ControllerBase
     {
         var query = _context.Products
             .Include(p => p.Category)
+            .Include(p => p.ItemSpecs)
             .AsQueryable();
 
         if (categoryId.HasValue)
@@ -62,7 +63,13 @@ public class ProductsController : ControllerBase
                 StockQuantity = p.StockQuantity,
                 ImageUrl = p.ImageUrl,
                 CategoryId = p.CategoryId,
-                CategoryName = p.Category != null ? p.Category.Name : string.Empty
+                CategoryName = p.Category != null ? p.Category.Name : string.Empty,
+
+                ItemSpecs = p.ItemSpecs.Select(spec => new ProductSpecDto
+                {
+                    Name = spec.Name,
+                    Value = spec.Value
+                }).ToList()
             })
             .ToListAsync();
 
@@ -74,6 +81,7 @@ public class ProductsController : ControllerBase
     {
         var product = await _context.Products
             .Include(p => p.Category)
+            .Include(p => p.ItemSpecs)
             .Where(p => p.Id == id)
             .Select(p => new ProductDto
             {
@@ -84,7 +92,13 @@ public class ProductsController : ControllerBase
                 StockQuantity = p.StockQuantity,
                 ImageUrl = p.ImageUrl,
                 CategoryId = p.CategoryId,
-                CategoryName = p.Category != null ? p.Category.Name : string.Empty
+                CategoryName = p.Category != null ? p.Category.Name : string.Empty,
+
+                ItemSpecs = p.ItemSpecs.Select(spec => new ProductSpecDto
+                {
+                    Name = spec.Name,
+                    Value = spec.Value
+                }).ToList()
             })
             .FirstOrDefaultAsync();
 

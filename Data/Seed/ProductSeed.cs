@@ -4,8 +4,8 @@ namespace ProjectOrangeApi.Data.Seed;
 
 public static class ProductSeed
 {
-  public static Product[] Products => new[]
-    {
+    public static Product[] Products =>
+    [
         new Product { Id = 1, Name = "iPhone 15", Description = "Apple smartphone", Price = 59999, StockQuantity = 10, ImageUrl = "", CategoryId = 1 },
         new Product { Id = 2, Name = "Samsung Galaxy S24", Description = "Android flagship smartphone", Price = 54999, StockQuantity = 12, ImageUrl = "", CategoryId = 1 },
         new Product { Id = 3, Name = "Google Pixel 8", Description = "Google AI smartphone", Price = 39999, StockQuantity = 8, ImageUrl = "", CategoryId = 1 },
@@ -28,5 +28,5 @@ public static class ProductSeed
         new Product { Id = 18, Name = "External SSD 1TB", Description = "Portable high-speed SSD", Price = 6500, StockQuantity = 16, ImageUrl = "", CategoryId = 3 },
         new Product { Id = 19, Name = "Power Bank 20000mAh", Description = "Fast-charging power bank", Price = 2000, StockQuantity = 28, ImageUrl = "", CategoryId = 3 },
         new Product { Id = 20, Name = "27-inch Monitor", Description = "QHD productivity monitor", Price = 12999, StockQuantity = 10, ImageUrl = "", CategoryId = 3 }
-    };
+    ];
 }

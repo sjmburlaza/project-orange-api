@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
   public DbSet<CartItem> CartItems => Set<CartItem>();
   public DbSet<CartItemAddon> CartItemAddons => Set<CartItemAddon>();
   public DbSet<CartVoucher> CartVouchers => Set<CartVoucher>();
+  public DbSet<ProductSpec> ProductSpecs => Set<ProductSpec>();
 
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,8 +27,8 @@ public class AppDbContext : DbContext
     base.OnModelCreating(modelBuilder);
 
     modelBuilder.Entity<Product>()
-    .Property(p => p.Price)
-    .HasPrecision(18, 2);
+      .Property(p => p.Price)
+      .HasPrecision(18, 2);
 
     modelBuilder.Entity<CartItem>()
       .Property(c => c.Price)
@@ -66,5 +67,6 @@ public class AppDbContext : DbContext
     );
 
     modelBuilder.Entity<Product>().HasData(ProductSeed.Products);
+    modelBuilder.Entity<ProductSpec>().HasData(ProductSpecSeed.ProductSpecs);
   }
 }

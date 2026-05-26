@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectOrangeApi.Data;
 
@@ -11,9 +12,11 @@ using ProjectOrangeApi.Data;
 namespace ProjectOrangeApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260526045713_AddCategoryNameToCartItem")]
+    partial class AddCategoryNameToCartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,32 +24,6 @@ namespace ProjectOrangeApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CartItemSpec", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CartItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartItemId");
-
-                    b.ToTable("CartItemSpec");
-                });
 
             modelBuilder.Entity("ProjectOrangeApi.Models.Cart", b =>
                 {
@@ -96,9 +73,6 @@ namespace ProjectOrangeApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -510,365 +484,6 @@ namespace ProjectOrangeApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ProjectOrangeApi.Models.ProductSpec", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductSpecs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Storage",
-                            ProductId = 1,
-                            Value = "128GB"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Color",
-                            ProductId = 1,
-                            Value = "Black"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Storage",
-                            ProductId = 2,
-                            Value = "256GB"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Color",
-                            ProductId = 2,
-                            Value = "Gray"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Storage",
-                            ProductId = 3,
-                            Value = "128GB"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Color",
-                            ProductId = 3,
-                            Value = "Obsidian"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Storage",
-                            ProductId = 4,
-                            Value = "256GB"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Color",
-                            ProductId = 4,
-                            Value = "Green"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Storage",
-                            ProductId = 5,
-                            Value = "256GB"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Color",
-                            ProductId = 5,
-                            Value = "Silver"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Memory",
-                            ProductId = 6,
-                            Value = "8GB"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Storage",
-                            ProductId = 6,
-                            Value = "256GB"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Color",
-                            ProductId = 6,
-                            Value = "Midnight"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Memory",
-                            ProductId = 7,
-                            Value = "16GB"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Storage",
-                            ProductId = 7,
-                            Value = "512GB"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Color",
-                            ProductId = 7,
-                            Value = "Silver"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Memory",
-                            ProductId = 8,
-                            Value = "16GB"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Storage",
-                            ProductId = 8,
-                            Value = "1TB"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Name = "Color",
-                            ProductId = 8,
-                            Value = "Black"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "Memory",
-                            ProductId = 9,
-                            Value = "32GB"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Name = "Storage",
-                            ProductId = 9,
-                            Value = "1TB"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Name = "Color",
-                            ProductId = 9,
-                            Value = "White"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Name = "Memory",
-                            ProductId = 10,
-                            Value = "16GB"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Name = "Storage",
-                            ProductId = 10,
-                            Value = "512GB"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Name = "Color",
-                            ProductId = 10,
-                            Value = "Gray"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Name = "Connection",
-                            ProductId = 11,
-                            Value = "USB-C"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Name = "Color",
-                            ProductId = 11,
-                            Value = "Black"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Name = "Connection",
-                            ProductId = 12,
-                            Value = "Bluetooth"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Name = "Color",
-                            ProductId = 12,
-                            Value = "White"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Name = "Ports",
-                            ProductId = 13,
-                            Value = "7-in-1"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Name = "Color",
-                            ProductId = 13,
-                            Value = "Space Gray"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Name = "Material",
-                            ProductId = 14,
-                            Value = "Aluminum"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Name = "Color",
-                            ProductId = 14,
-                            Value = "Silver"
-                        },
-                        new
-                        {
-                            Id = 34,
-                            Name = "Connection",
-                            ProductId = 15,
-                            Value = "Bluetooth"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            Name = "Color",
-                            ProductId = 15,
-                            Value = "Black"
-                        },
-                        new
-                        {
-                            Id = 36,
-                            Name = "Connection",
-                            ProductId = 16,
-                            Value = "Bluetooth"
-                        },
-                        new
-                        {
-                            Id = 37,
-                            Name = "Color",
-                            ProductId = 16,
-                            Value = "Blue"
-                        },
-                        new
-                        {
-                            Id = 38,
-                            Name = "Resolution",
-                            ProductId = 17,
-                            Value = "1080p"
-                        },
-                        new
-                        {
-                            Id = 39,
-                            Name = "Color",
-                            ProductId = 17,
-                            Value = "Black"
-                        },
-                        new
-                        {
-                            Id = 40,
-                            Name = "Storage",
-                            ProductId = 18,
-                            Value = "1TB"
-                        },
-                        new
-                        {
-                            Id = 41,
-                            Name = "Color",
-                            ProductId = 18,
-                            Value = "Black"
-                        },
-                        new
-                        {
-                            Id = 42,
-                            Name = "Capacity",
-                            ProductId = 19,
-                            Value = "20000mAh"
-                        },
-                        new
-                        {
-                            Id = 43,
-                            Name = "Color",
-                            ProductId = 19,
-                            Value = "White"
-                        },
-                        new
-                        {
-                            Id = 44,
-                            Name = "Size",
-                            ProductId = 20,
-                            Value = "27-inch"
-                        },
-                        new
-                        {
-                            Id = 45,
-                            Name = "Resolution",
-                            ProductId = 20,
-                            Value = "QHD"
-                        },
-                        new
-                        {
-                            Id = 46,
-                            Name = "Color",
-                            ProductId = 20,
-                            Value = "Black"
-                        });
-                });
-
-            modelBuilder.Entity("CartItemSpec", b =>
-                {
-                    b.HasOne("ProjectOrangeApi.Models.CartItem", null)
-                        .WithMany("ItemSpecs")
-                        .HasForeignKey("CartItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ProjectOrangeApi.Models.CartItem", b =>
                 {
                     b.HasOne("ProjectOrangeApi.Models.Cart", "Cart")
@@ -928,17 +543,6 @@ namespace ProjectOrangeApi.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ProjectOrangeApi.Models.ProductSpec", b =>
-                {
-                    b.HasOne("ProjectOrangeApi.Models.Product", "Product")
-                        .WithMany("ItemSpecs")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ProjectOrangeApi.Models.Cart", b =>
                 {
                     b.Navigation("AppliedVouchers");
@@ -949,8 +553,6 @@ namespace ProjectOrangeApi.Migrations
             modelBuilder.Entity("ProjectOrangeApi.Models.CartItem", b =>
                 {
                     b.Navigation("Addons");
-
-                    b.Navigation("ItemSpecs");
                 });
 
             modelBuilder.Entity("ProjectOrangeApi.Models.Category", b =>
@@ -961,11 +563,6 @@ namespace ProjectOrangeApi.Migrations
             modelBuilder.Entity("ProjectOrangeApi.Models.Order", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("ProjectOrangeApi.Models.Product", b =>
-                {
-                    b.Navigation("ItemSpecs");
                 });
 #pragma warning restore 612, 618
         }

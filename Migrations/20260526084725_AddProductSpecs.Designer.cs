@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectOrangeApi.Data;
 
@@ -11,9 +12,11 @@ using ProjectOrangeApi.Data;
 namespace ProjectOrangeApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260526084725_AddProductSpecs")]
+    partial class AddProductSpecs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,32 +24,6 @@ namespace ProjectOrangeApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CartItemSpec", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CartItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartItemId");
-
-                    b.ToTable("CartItemSpec");
-                });
 
             modelBuilder.Entity("ProjectOrangeApi.Models.Cart", b =>
                 {
@@ -96,9 +73,6 @@ namespace ProjectOrangeApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -860,15 +834,6 @@ namespace ProjectOrangeApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CartItemSpec", b =>
-                {
-                    b.HasOne("ProjectOrangeApi.Models.CartItem", null)
-                        .WithMany("ItemSpecs")
-                        .HasForeignKey("CartItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ProjectOrangeApi.Models.CartItem", b =>
                 {
                     b.HasOne("ProjectOrangeApi.Models.Cart", "Cart")
@@ -949,8 +914,6 @@ namespace ProjectOrangeApi.Migrations
             modelBuilder.Entity("ProjectOrangeApi.Models.CartItem", b =>
                 {
                     b.Navigation("Addons");
-
-                    b.Navigation("ItemSpecs");
                 });
 
             modelBuilder.Entity("ProjectOrangeApi.Models.Category", b =>

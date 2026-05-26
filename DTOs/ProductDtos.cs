@@ -10,4 +10,6 @@ public class ProductDto
     public string ImageUrl { get; set; } = string.Empty;
     public int CategoryId { get; set; }
     public string CategoryName { get; set; } = string.Empty;
+
+    public List<ProductSpecDto> ItemSpecs { get; set; } = [];
 }
